@@ -3,11 +3,15 @@ package main
 import (
 	"flag"
 	"log"
+	"proj/clients/telegram"
+)
+
+const (
+	tgBotHost = "api.telegram.org"
 )
 
 func main() {
-	t := token()
-
+	tgClient := telegram.New(tgBotHost, token())
 	//fetcher - собиратель - отправляет запросы API телеги, чтобы получить новые события
 	//fetcher = fetcher.New()
 	//обработка сообщений и выполнение каких-либо действий
