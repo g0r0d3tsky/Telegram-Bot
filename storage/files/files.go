@@ -16,6 +16,11 @@ type Storage struct {
 	basePath string
 }
 
+func (s Storage) IsExist(p *storage.Page) (bool, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 const defaultPerm = 0774
 
 func New(basePath string) Storage {
@@ -94,10 +99,10 @@ func (s Storage) Remove(p *storage.Page) error {
 	return nil
 }
 
-func (s Storage) IsExsist(p *storage.Page) (bool, error) {
+func (s Storage) IsExists(p *storage.Page) (bool, error) {
 	fileName, err := fileName(p)
 	if err != nil {
-		return false, e.Wrap("can't check if file is exist", err)
+		return false, e.Wrap("can't check if file exists", err)
 	}
 
 	path := filepath2.Join(s.basePath, p.UserName, fileName)
@@ -106,9 +111,11 @@ func (s Storage) IsExsist(p *storage.Page) (bool, error) {
 	case errors.Is(err, os.ErrNotExist):
 		return false, nil
 	case err != nil:
-		msg := fmt.Sprintf("can't chech if file %s exists", path)
+		msg := fmt.Sprintf("can't check if file %s exists", path)
+
 		return false, e.Wrap(msg, err)
 	}
+
 	return true, nil
 }
 
